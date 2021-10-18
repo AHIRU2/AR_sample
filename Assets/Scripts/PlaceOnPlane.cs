@@ -71,7 +71,7 @@ public class PlaceOnPlane : MonoBehaviour
             //Rayが平面感知した最新の地点を取得
             Pose hitPose = raycastHitList[0].pose;
 
-            if (obj = null)
+            if (obj == null)
             {
                 LogDebugger.instance.Displaylog("Raycast 成功");
 
