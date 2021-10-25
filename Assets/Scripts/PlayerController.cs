@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
     /// 弾数の計算と更新
     /// </summary>
     /// <param name="amount"></param>
-    public void CalcVulletCount(int amount)
+    public void CalcBulletCount(int amount)
     {
         BulletCount += amount;
 

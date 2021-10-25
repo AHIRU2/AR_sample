@@ -8,6 +8,9 @@ public class EffectManager : MonoBehaviour
 
     //Player用
     [Header("発射口用のエフェクト")]
+    public GameObject muzzleFlashPrefab;
+
+    [Header("敵に弾が当たった時のエフェクト")]
     public GameObject hitEffectPrefab;
 
     // TODO 適宜追加
