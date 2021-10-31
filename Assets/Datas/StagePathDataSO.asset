@@ -12,4 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6ce944870c284abca19edc2582c4aea, type: 3}
   m_Name: StagePathDataSO
   m_EditorClassIdentifier: 
-  stagePathDatasList: []
+  stagePathDatasList:
+  - branchDatasList:
+    - branchDirectionType: 0
+      railPathData: {fileID: 0}
+  - branchDatasList:
+    - branchDirectionType: 1
+      railPathData: {fileID: 0}
+    - branchDirectionType: 2
+      railPathData: {fileID: 0}

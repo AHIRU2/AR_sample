@@ -17,6 +17,7 @@ public class RailMoveController : MonoBehaviour
 
     private GameManager gameManager;
 
+    private int moveCount;
 
 
     /// <summary>
@@ -77,6 +78,17 @@ public class RailMoveController : MonoBehaviour
 
         // TODO 他に必要な処理を追記
 
+        //　移動を一時停止
+        PauseMove();
+
+        //ゲームの進行状態が移動になるまで待機
+        yield return new WaitUntil(() => gameManager.currentGameState == GameState.Play_Move);
+
+        //移動開始
+        ResumeMove();
+
+        Debug.Log("移動開始");
+
     }
 
 
@@ -130,7 +142,27 @@ public class RailMoveController : MonoBehaviour
             tween.Kill();
 
             // TODO 移動先が残っていない場合には、ゲームマネージャー側で分岐の確認(次のルートの選定、移動先の分岐、ボス、クリアのいずれか)
+
+            //経路情報をからにする
+            tween = null;
+
+            //移動先が残っていない場合には、ゲームマネージャー側で分岐の確認(次ルート選定、移動先の分岐、ボス、クリアのいずれか)
+            moveCount++;
+
+            gameManager.PreparateCheckNextBranch(moveCount);
+
+
             Debug.Log("分岐確認");
         }
+    }
+
+
+    /// <summary>
+    /// 移動用の処理が登録されたか確認
+    /// </summary>
+    /// <returns></returns>
+    public bool GetMoveSetting()
+    {
+        return tween != null ? true : false;
     }
 }
