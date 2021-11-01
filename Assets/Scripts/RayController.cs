@@ -10,6 +10,8 @@ public class RayController : MonoBehaviour
     [Header("発射口用のエフェクトサイズ調整")]
     public Vector3 muzzleFlashScale;
 
+    public GameObject hitEffectObj;
+
     private bool isShooting;
 
     private GameObject muzzleFlasjObj;  //生成したエフェクトの代入用
@@ -24,6 +26,8 @@ public class RayController : MonoBehaviour
 
     [SerializeField]
     private PlayerController playerController;
+
+    private EventBase eventBase;
 
 
     // Start is called before the first frame update
@@ -129,22 +133,47 @@ public class RayController : MonoBehaviour
                 Debug.Log(target.name);
 
                 // TODO TryGetComponentの処理で敵や障害物などの情報を取得しつつ、判定をする
+                //ゲームオブジェクトにアタッチされている親クラスを取得できるか判定
+                if(target.TryGetComponent(out eventBase))
+                {
+                    //取得した親クラスにある抽象メソッドを実行する＝＞子クラスで実装しているメソッドの振る舞いになる
+                    eventBase.TriggerEvent(playerController.bulletPower);
 
-                // TODO 演出
+                    //演出
+                    PlayHitEffect(hit.point, hit.normal);
+                }
 
                 //同じ対象の場合
             }
-            else
+            else if(target==hit.collider.gameObject)
             {
                 // TODO すでに情報があるので再取得はせずに判定のみする
+                eventBase.TriggerEvent(playerController.bulletPower);
 
                 // TODO 演出
+                PlayHitEffect(hit.point, hit.normal);
             }
         }
 
         //弾数を減らす
         playerController.CalcBulletCount(-1);
 
+    }
+
+
+    private void PlayHitEffect(Vector3 effectPos,Vector3 surfacePos)
+    {
+        if (hitEffectObj == null)
+        {
+            hitEffectObj = Instantiate(EffectManager.instance.hitEffectPrefab, effectPos, Quaternion.identity);
+        }
+        else
+        {
+            hitEffectObj.transform.position = effectPos;
+            hitEffectObj.transform.rotation = Quaternion.FromToRotation(Vector3.forward, surfacePos);
+
+            hitEffectObj.SetActive(true);
+        }
     }
 
 
