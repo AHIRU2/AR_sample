@@ -137,7 +137,7 @@ public class RayController : MonoBehaviour
                 if(target.TryGetComponent(out eventBase))
                 {
                     //取得した親クラスにある抽象メソッドを実行する＝＞子クラスで実装しているメソッドの振る舞いになる
-                    eventBase.TriggerEvent(playerController.bulletPower);
+                    eventBase.TriggerEvent(playerController.bulletPower, BodyRegionType.Not_Available);
 
                     //演出
                     PlayHitEffect(hit.point, hit.normal);
@@ -148,7 +148,7 @@ public class RayController : MonoBehaviour
             else if(target==hit.collider.gameObject)
             {
                 // TODO すでに情報があるので再取得はせずに判定のみする
-                eventBase.TriggerEvent(playerController.bulletPower);
+                eventBase.TriggerEvent(playerController.bulletPower,BodyRegionType.Not_Available);
 
                 // TODO 演出
                 PlayHitEffect(hit.point, hit.normal);
