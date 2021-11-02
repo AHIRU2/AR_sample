@@ -71,6 +71,7 @@ public class RayController : MonoBehaviour
     /// <returns></returns>
     private IEnumerator ShootTimer()
     {
+        Debug.Log("撃った");
         if (!isShooting)
         {
             isShooting = true;
@@ -96,6 +97,8 @@ public class RayController : MonoBehaviour
             yield return new WaitForSeconds(playerController.shootInterval);
 
             muzzleFlasjObj.SetActive(false);
+
+            isShooting = false;
 
             //if (hitEffectObj != null)
             //{

@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
         SetMissionTriggers();
 
         //経路を移動先に設定
-        railMoveController.SetNextRailPathData(originRailPathData);
+        //railMoveController.SetNextRailPathData(originRailPathData);
 
         //レール移動の経路と移動登録が完了するまで待機
         yield return new WaitUntil(() => railMoveController.GetMoveSetting());

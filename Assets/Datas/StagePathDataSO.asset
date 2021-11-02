@@ -15,9 +15,12 @@ MonoBehaviour:
   stagePathDatasList:
   - branchDatasList:
     - branchDirectionType: 0
-      railPathData: {fileID: 0}
+      railPathData: {fileID: 5532568418378239636, guid: 07b5a9f8290ee4308a3aadf42a500855,
+        type: 3}
   - branchDatasList:
     - branchDirectionType: 1
-      railPathData: {fileID: 0}
+      railPathData: {fileID: 5532568418378239636, guid: 07b5a9f8290ee4308a3aadf42a500855,
+        type: 3}
     - branchDirectionType: 2
-      railPathData: {fileID: 0}
+      railPathData: {fileID: 5532568418378239636, guid: 07b5a9f8290ee4308a3aadf42a500855,
+        type: 3}
