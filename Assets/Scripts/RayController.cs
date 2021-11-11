@@ -120,11 +120,13 @@ public class RayController : MonoBehaviour
     {
         //カメラの位置からRayを投射
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //マウスクリックした位置にRayを飛ばす
+
         Debug.DrawRay(ray.origin, ray.direction, Color.red, 3.0f);
 
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, playerController.shootRange, LayerMask.GetMask(layerMasksStr)))
+        if (Physics.Raycast(ray, out hit, playerController.shootRange, LayerMask.GetMask(layerMasksStr))==true)
         {
             Debug.Log(hit.collider.gameObject.name);
 
@@ -137,10 +139,11 @@ public class RayController : MonoBehaviour
 
                 // TODO TryGetComponentの処理で敵や障害物などの情報を取得しつつ、判定をする
                 //ゲームオブジェクトにアタッチされている親クラスを取得できるか判定
-                if(target.TryGetComponent(out eventBase))
+                if(target.transform.parent.TryGetComponent(out eventBase))
                 {
-                    //取得した親クラスにある抽象メソッドを実行する＝＞子クラスで実装しているメソッドの振る舞いになる
-                    eventBase.TriggerEvent(playerController.bulletPower, BodyRegionType.Not_Available);
+                    ////取得した親クラスにある抽象メソッドを実行する＝＞子クラスで実装しているメソッドの振る舞いになる
+                    //eventBase.TriggerEvent(playerController.bulletPower, BodyRegionType.Not_Available);
+                    CalcDamage();
 
                     //演出
                     PlayHitEffect(hit.point, hit.normal);
@@ -150,8 +153,9 @@ public class RayController : MonoBehaviour
             }
             else if(target==hit.collider.gameObject)
             {
-                // TODO すでに情報があるので再取得はせずに判定のみする
-                eventBase.TriggerEvent(playerController.bulletPower,BodyRegionType.Not_Available);
+                //// TODO すでに情報があるので再取得はせずに判定のみする
+                //eventBase.TriggerEvent(playerController.bulletPower,BodyRegionType.Not_Available);
+                CalcDamage();
 
                 // TODO 演出
                 PlayHitEffect(hit.point, hit.normal);
@@ -164,6 +168,11 @@ public class RayController : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// ヒット演出
+    /// </summary>
+    /// <param name="effectPos"></param>
+    /// <param name="surfacePos"></param>
     private void PlayHitEffect(Vector3 effectPos,Vector3 surfacePos)
     {
         if (hitEffectObj == null)
@@ -177,6 +186,25 @@ public class RayController : MonoBehaviour
 
             hitEffectObj.SetActive(true);
         }
+    }
+
+
+    private void CalcDamage()
+    {
+        (int lastDamage, BodyRegionType hitRegionType) partsValue;
+
+        //部位によるダメージ計算
+        if(target.TryGetComponent(out BodyRegionPartsController parts))
+        {
+            partsValue = parts.CalcDamageParts(playerController.bulletPower);
+        }
+        else
+        {
+            partsValue = (playerController.bulletPower, BodyRegionType.Not_Available);
+        }
+
+        //部位とダメージ決定
+        eventBase.TriggerEvent(partsValue.lastDamage, partsValue.hitRegionType);
     }
 
 

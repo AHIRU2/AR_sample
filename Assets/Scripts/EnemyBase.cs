@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBase : EventBase
+/// <summary>
+/// エネミーの基幹クラス
+/// </summary>
+public class EnemyBase : EventBase<int>
 {
 
     [SerializeField]
@@ -39,6 +42,8 @@ public class EnemyBase : EventBase
     public EnemyMoveType enemyMoveType;
 
     // TODO 部位のListを持たせる
+    [SerializeField, Header("部位の情報を登録するリスト")]
+    protected List<BodyRegionPartsController> partsControllersList = new List<BodyRegionPartsController>();
 
     // TODO 敵のデータクラスを持たせる
 
@@ -98,18 +103,6 @@ public class EnemyBase : EventBase
             return;
         }
 
-        //ローカル関数を定義
-        void SetAttackCoroutine()
-        {
-            //IEnumerator型の変数に攻撃用のメソッドを登録
-            attackCoroutine = Attack(player);
-
-            //登録したメソッドを実行
-            StartCoroutine(attackCoroutine);
-
-            Debug.Log("攻撃開始");
-        }
-
         //プレイヤーの情報を保持しており、攻撃中でないなら
         if (player != null)
         {
@@ -129,6 +122,19 @@ public class EnemyBase : EventBase
 
                 Debug.Log("攻撃範囲内にプレイヤー　初感知");
             }
+        }
+
+
+        //ローカル関数を定義
+        void SetAttackCoroutine()
+        {
+            //IEnumerator型の変数に攻撃用のメソッドを登録
+            attackCoroutine = Attack(player);
+
+            //登録したメソッドを実行
+            StartCoroutine(attackCoroutine);
+
+            Debug.Log("攻撃開始");
         }
     }
 
@@ -223,6 +229,15 @@ public class EnemyBase : EventBase
             // TODO エネミーの情報を外部クラスのListで管理している場合には、Listから削除
 
             // TODO 部位による判定があり、かつ、頭を打って倒した場合
+            if (hitParts == BodyRegionType.Head)
+            {
+                //頭を消す
+                BodyRegionPartsController parts = partsControllersList.Find(x => x.GetBodyPartType() == hitParts);
+                parts.gameObject.SetActive(false);
+
+                //スコアにボーナス(任意)
+                point *= 3;
+            }
 
             // TODO スコア加算
 
