@@ -50,6 +50,11 @@ public class RayController : MonoBehaviour
             .ThrottleFirst(TimeSpan.FromSeconds(playerController.shootInterval))
             .Subscribe(_ => { StartCoroutine(ShootTimer()); });
 
+        this.UpdateAsObservable()
+            .TakeUntilDestroy(this)
+            .Where(_ => playerController.BulletCount == 0 && playerController.isReloadModeOn && Input.GetMouseButtonDown(0))
+            .Subscribe(_ => { StartCoroutine(playerController.ReloadBullet()); });
+
     }
 
     // Update is called once per frame
@@ -58,10 +63,10 @@ public class RayController : MonoBehaviour
         // TODO ゲーム状態がプレイ中でない場合には処理は行わない制御をする
 
         //リロード判定(弾数0でリロード機能ありの場合)
-        if (playerController.BulletCount == 0 && playerController.isReloadModeOn && Input.GetMouseButtonDown(0))
-        {
-            StartCoroutine(playerController.ReloadBullet());
-        }
+        //if (playerController.BulletCount == 0 && playerController.isReloadModeOn && Input.GetMouseButtonDown(0))
+        //{
+        //    StartCoroutine(playerController.ReloadBullet());
+        //}
 
         //発射判定(弾数が残っており、リロード実行中でない場合)押しっぱなしで発射できる
 
