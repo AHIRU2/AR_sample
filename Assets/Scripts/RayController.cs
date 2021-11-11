@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+using UniRx.Triggers;
+using System;
+
 
 /// <summary>
 /// Rayによる弾の発射処理の制御クラス
@@ -12,7 +16,7 @@ public class RayController : MonoBehaviour
 
     public GameObject hitEffectObj;
 
-    private bool isShooting;
+    //private bool isShooting;
 
     private GameObject muzzleFlasjObj;  //生成したエフェクトの代入用
 
@@ -40,6 +44,11 @@ public class RayController : MonoBehaviour
             layerMasksStr[i] = LayerMask.LayerToName(layerMasks[i]);
         }
 
+        this.UpdateAsObservable()
+            .TakeUntilDestroy(this)
+            .Where(_ => playerController.BulletCount > 0 && !playerController.isReloading && Input.GetMouseButton(0))
+            .ThrottleFirst(TimeSpan.FromSeconds(playerController.shootInterval))
+            .Subscribe(_ => { StartCoroutine(ShootTimer()); });
 
     }
 
@@ -57,10 +66,10 @@ public class RayController : MonoBehaviour
         //発射判定(弾数が残っており、リロード実行中でない場合)押しっぱなしで発射できる
 
 
-        if (playerController.BulletCount > 0 && !playerController.isReloading && Input.GetMouseButton(0)){
-            //発射時間の計測
-            StartCoroutine(ShootTimer());
-        }
+        //if (playerController.BulletCount > 0 && !playerController.isReloading && Input.GetMouseButton(0)){
+        //    //発射時間の計測
+        //    StartCoroutine(ShootTimer());
+        //}
     }
 
 
@@ -72,9 +81,9 @@ public class RayController : MonoBehaviour
     private IEnumerator ShootTimer()
     {
         Debug.Log("撃った");
-        if (!isShooting)
-        {
-            isShooting = true;
+        //if (!isShooting)
+        //{
+        //    isShooting = true;
 
             //発射エフェクトの表示、初回のみ生成し、2回目はオンオフで切り替える
             if (muzzleFlasjObj == null)
@@ -98,7 +107,7 @@ public class RayController : MonoBehaviour
 
             muzzleFlasjObj.SetActive(false);
 
-            isShooting = false;
+            //isShooting = false;
 
             //if (hitEffectObj != null)
             //{
@@ -107,10 +116,9 @@ public class RayController : MonoBehaviour
             //else{
             //    yield return null;
             //}
-        }
+        //}
 
     }
-
 
 
     /// <summary>
