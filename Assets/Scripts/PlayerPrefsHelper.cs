@@ -37,6 +37,8 @@ public class PlayerPrefsHelper : MonoBehaviour
         //セットしたKeyとjsonをセーブ
         PlayerPrefs.Save();
 
+        Debug.Log(json);
+
     }
 
 

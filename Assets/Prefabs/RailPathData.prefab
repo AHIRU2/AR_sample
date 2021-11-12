@@ -137,9 +137,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pathDataDetails:
-  - railMoveDuration: 30
+  - railMoveDuration: 0
     pathTran: {fileID: 5532568417493846341}
-    isMissionTrigger: 0
+    isMissionTrigger: 1
   - railMoveDuration: 10
     pathTran: {fileID: 5532568417520202707}
     isMissionTrigger: 0

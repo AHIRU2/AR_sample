@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour
         // TODO ルート用の経路情報を設定
         originRailPathData = DatabaseManager.instance.GetRailPathDatasFromBranchNo(0, BranchDirectionType.NoBranch);
 
+        //originRailPathData.pathDataDetails[0] = PlayerPrefsHelper.LoadGetObjectDate<RailPathData.PathDataDetail>("Save1");
+        //PlayerPrefsHelper.SaveSetObjectData<RailPathData.PathDataDetail>("Save1", originRailPathData.pathDataDetails[0]);
+    
         //RailMoveControllerの初期設定
         railMoveController.SetUpRailMoveController(this);
 
