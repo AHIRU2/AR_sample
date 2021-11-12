@@ -558,7 +558,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 48097492}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.52483785
   m_Height: 2.0156777
   m_Direction: 1
@@ -576,12 +576,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventType: 0
-  lookTarget: {fileID: 0}
+  lookTarget: {fileID: 1644377141}
   enemyNo: 0
   hp: 2
   attackPower: 0
   moveSpeed: 0
   enemyMoveType: 0
+  partsControllersList:
+  - {fileID: 965876557}
+  - {fileID: 965876559}
 --- !u!1001 &51381622
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10401,6 +10404,72 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6dc4cf4496348884d8ee27743ae38562, type: 3}
+--- !u!1 &965876556 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3731116051764432412, guid: 6dc4cf4496348884d8ee27743ae38562,
+    type: 3}
+  m_PrefabInstance: {fileID: 965876555}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &965876557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 965876556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dc601591e45049199b1f13aad4e2da2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bodyPartType: 1
+--- !u!1 &965876558 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7792115628037826112, guid: 6dc4cf4496348884d8ee27743ae38562,
+    type: 3}
+  m_PrefabInstance: {fileID: 965876555}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &965876559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 965876558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dc601591e45049199b1f13aad4e2da2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bodyPartType: 3
+--- !u!136 &965876560
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 965876558}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2327792
+  m_Height: 1.1130044
+  m_Direction: 2
+  m_Center: {x: 0.00028246647, y: 0.03787853, z: 0.9304278}
+--- !u!136 &965876561
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 965876556}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.15378536
+  m_Height: 0.24153955
+  m_Direction: 1
+  m_Center: {x: 0.000000045541956, y: -0.017404176, z: 1.6408842}
 --- !u!1001 &969249979
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// エネミーの基幹クラス
 /// </summary>
-public class EnemyBase : EventBase<int>
+public class EnemyBase : EventBase
 {
 
     [SerializeField]
