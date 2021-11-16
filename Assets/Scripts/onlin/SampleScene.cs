@@ -10,6 +10,9 @@ public class SampleScene : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
+        // プレイヤー自身の名前を"Player"に設定する
+        PhotonNetwork.NickName = "Player";
+
         // PhotonServerSettingsの設定内容を使ってマスターサーバーへ接続する
         PhotonNetwork.ConnectUsingSettings();
     }
@@ -28,5 +31,17 @@ public class SampleScene : MonoBehaviourPunCallbacks
         var position = new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f));
         PhotonNetwork.Instantiate("stage", position, Quaternion.identity);
         PhotonNetwork.Instantiate("Zombieonline", position, Quaternion.identity);
+    }
+
+    // 他プレイヤーがルームへ参加した時に呼ばれるコールバック
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Debug.Log($"{newPlayer.NickName}が参加しました");
+    }
+
+    // 他プレイヤーがルームから退出した時に呼ばれるコールバック
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        Debug.Log($"{otherPlayer.NickName}が退出しました");
     }
 }
